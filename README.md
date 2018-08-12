@@ -1,8 +1,2 @@
 # bjbus
-
-A new Flutter project.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+An real-time bus query client for both IOS and Android, build with Flutter.

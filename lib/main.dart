@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -20,39 +21,53 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  List data;
+  List data = [
+      {'no': 621, 'station': '北苑家园西'},
+      {'no': 966, 'station': '北苑家园西'},
+      {'no': 621, 'station': '广顺桥南'},
+      {'no': 966, 'station': '广顺桥南'}
+    ];
   @override
   void initState() {
     super.initState();
-    _pullNet();
+    // _pullNet();
   }
 
   void _pullNet() async {
-    await http.get('http://www.wanandroid.com/project/list/1/json?cid=1')
-      .then((http.Response response) {
-        var convertDataToJson = JSON.decode(response.body);
-        convertDataToJson = convertDataToJson["data"]["datas"];
+    // await http.get('http://www.wanandroid.com/project/list/1/json?cid=1')
+    //   .then((http.Response response) {
+    //     var convertDataToJson = JSON.decode(response.body);
+    //     convertDataToJson = convertDataToJson["data"]["datas"];
 
-        print(convertDataToJson);
+    //     print("------------------");
+    //     print(convertDataToJson);
 
-        setState(() {
-          data = convertDataToJson;
-        });
-      });
+    //     setState(() {
+    //       data = convertDataToJson;
+    //     });
+    //   });
+    setState(() {
+      data = [
+        {'no': 621, 'station': '北苑家园西'},
+        {'no': 966, 'station': '北苑家园西'},
+        {'no': 621, 'station': '广顺桥南'},
+        {'no': 966, 'station': '广顺桥南'}
+      ];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new ListView(
-        children: _getItem(),
+        children: _getItem(data),
       )
     );
   }
 }
 
-List<Widget> _getItem() {
-  return data.map((item) {
+List<Widget> _getItem(data) {
+  return data.map<Widget>((item) {
     return new Card(
       child: new Padding(
         padding: const EdgeInsets.all(10.0),
@@ -65,32 +80,36 @@ List<Widget> _getItem() {
 }
 
 Widget _getRowWidget(item) {
-  return new Row(children: <Widget>[
-    new Flexible(
-      flex: 1,
-      fit: FlexFit.tight,
-      child: new Stack(children: <Widget>[
-        new Column(children: <Widget>[
-          new Text(
-            "${item["title"]}".trim(),
-            style: new TextStyle(color: Colors.black, fontSize: 20.0),
-            textAlign: TextAlign.left,
-          ),
-          new Text(
-            "${item["desc"]}",
-            maxLines: 3,
-          )
-        ],)
-      ],)
-    ),
-    new ClipRect(
-      child: new FadeInImage.assetNetwork(
-        placeholder: "images/ic_shop_normal.png",
-        image: "${item['envelopePic']}",
-        width: 50.0,
-        height: 50.0,
-        fit: BoxFit.fitWidth
-      )
-    )
-  ],);
+  return new ListTile(
+    title: new Text("${item['no']}路"),
+    subtitle: new Text(item['station'])
+  );
+  // return new Row(children: <Widget>[
+  //   new Flexible(
+  //     flex: 1,
+  //     fit: FlexFit.tight,
+  //     child: new Stack(children: <Widget>[
+  //       new Column(children: <Widget>[
+  //         new Text(
+  //           "${item["title"]}".trim(),
+  //           style: new TextStyle(color: Colors.black, fontSize: 20.0),
+  //           textAlign: TextAlign.left,
+  //         ),
+  //         new Text(
+  //           "${item["desc"]}",
+  //           maxLines: 3,
+  //         )
+  //       ],)
+  //     ],)
+  //   ),
+  //   new ClipRect(
+  //     child: new FadeInImage.assetNetwork(
+  //       placeholder: "images/ic_shop_normal.png",
+  //       image: "${item['envelopePic']}",
+  //       width: 50.0,
+  //       height: 50.0,
+  //       fit: BoxFit.fitWidth
+  //     )
+  //   )
+  // ],);
 }

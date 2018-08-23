@@ -59,22 +59,33 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("北京公交实时查询"),
+      ),
       body: new ListView(
-        children: _getItem(data),
+        children: _getItem(data, context),
       )
     );
   }
 }
 
-List<Widget> _getItem(data) {
+List<Widget> _getItem(data, context) {
   return data.map<Widget>((item) {
-    return new Card(
-      child: new Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: _getRowWidget(item),
+    return new GestureDetector(
+      child: new Card(
+        child: new Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: _getRowWidget(item),
+        ),
+        elevation: 3.0,
+        margin: const EdgeInsets.all(10.0)
       ),
-      elevation: 3.0,
-      margin: const EdgeInsets.all(10.0)
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Detail())
+        );
+      }
     );
   }).toList();
 }

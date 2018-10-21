@@ -81,9 +81,11 @@ List<Widget> _getItem(data, context) {
         margin: const EdgeInsets.all(10.0)
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Detail())
+        Navigator.of(context, rootNavigator: true).push(
+          new CupertinoPageRoute<bool>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => new Tab3Dialog(),
+          ),
         );
       }
     );
